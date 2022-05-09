@@ -4,8 +4,8 @@
 #include <unistd.h>
 #include <locale.h>
 
-#define THREAD_NUM 8
-#define FACTORIAL 1000000
+#define THREAD_NUM 20
+#define FACTORIAL 100000000
 
 unsigned long progs[THREAD_NUM] = {0};
 
@@ -92,7 +92,7 @@ int main()
     mpz_mul(result, result, n[i]);
   }
 
-  printf("writing\n");
+  printf("\nwriting\n");
 
   FILE *fp = fopen("output.txt", "w+");
 
