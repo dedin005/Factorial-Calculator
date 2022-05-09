@@ -1,8 +1,9 @@
 # Makefile for Multithreaded Factorial Calculator in C
 
 # -Wno-comment: disable warnings for multi-line comments, present in some tests
-CFLAGS      = -Wall -Wno-comment -Werror -g -lgmp -lpthread
-CFLAGS_FAST = -Ofast -lgmp -lpthread
+CFLAGS      = -Wall -Wno-comment -Werror -g
+CFLAGS_FAST = -Ofast
+LIBS        = -lgmp -lpthread
 CC_TEST     = gcc $(CFLAGS)
 CC          = gcc $(CFLAGS_FAST)
 SHELL       = /bin/bash
@@ -24,13 +25,13 @@ factorial-debug.o : factorial.c
 	$(CC_TEST) -o $@ -c $^
 
 factorial-debug : factorial-debug.o
-	$(CC_TEST) -o $@ $^
+	$(CC_TEST) -o $@ $^ $(LIBS)
 
 factorial.o : factorial.c
 	$(CC) -c $<
 
 factorial : factorial.o
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(LIBS)
 
 clean-results :
 	rm -f output.txt
