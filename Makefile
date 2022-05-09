@@ -10,7 +10,7 @@ SHELL       = /bin/bash
 CWD         = $(shell pwd | sed 's/.*\///g')
 
 PROGRAMS = \
-	factorial \
+	factorial\
 
 all : $(PROGRAMS)
 
@@ -19,7 +19,7 @@ clean : clean-execs clean-results
 debug : factorial-debug
 
 clean-execs :
-	rm -f factorial-debug $(PROGRAMS)*.o
+	rm -f factorial-debug *.o $(PROGRAMS)
 
 factorial-debug.o : factorial.c
 	$(CC_TEST) -o $@ -c $^
