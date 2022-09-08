@@ -1,4 +1,4 @@
-# This is a factorial program for very large numbers
+# Factorial Program for very large numbers
 
 > Made using Pthreads and GMP, written in C
 
