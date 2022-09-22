@@ -4,6 +4,9 @@
 #include <unistd.h>
 #include <locale.h>
 
+#define str(x) #x
+#define stringify(x) str(x)
+
 #define THREAD_NUM 20
 #define FACTORIAL 100000000
 
@@ -40,7 +43,6 @@ void *factorial_part(void *a)
   return NULL;
 }
 
-// compile with gcc -Ofast -o p p.c -lgmp -lpthread
 int main()
 {
   setlocale(LC_NUMERIC, "");
@@ -84,9 +86,10 @@ int main()
   mpz_init(result);
   mpz_set_ui(result, 1);
 
+  printf("\n");
   for (int i = 0; i < THREAD_NUM; i++)
   {
-    printf("\nfinal multiplication %d / %d\r", i, THREAD_NUM);
+    printf("final multiplication %d / %d\r", i, THREAD_NUM);
     fflush(stdout);
     pthread_join(p[i], NULL);
     mpz_mul(result, result, n[i]);
@@ -94,7 +97,7 @@ int main()
 
   printf("\nwriting\n");
 
-  FILE *fp = fopen("output.txt", "w+");
+  FILE *fp = fopen("Factorial of " stringify(FACTORIAL) ".txt", "w+");
 
   mpz_out_str(fp, 10, result);
 
