@@ -128,7 +128,7 @@ int main()
 
   while (count > 1)
   {
-    printf("Remaining parts: %'d\r", sum, FACTORIAL);
+    printf("Remaining parts: %'d\r", count);
     fflush(stdout);
 
     for (int i = 0; i < half; i++)
