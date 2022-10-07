@@ -8,8 +8,8 @@
 #define str(x) #x
 #define stringify(x) str(x)
 
-#define THREAD_NUM 7
-#define FACTORIAL 10000000
+#define THREAD_NUM 280
+#define FACTORIAL 100000000
 
 unsigned long progs[THREAD_NUM] = {0};
 
@@ -128,6 +128,9 @@ int main()
 
   while (count > 1)
   {
+    printf("Remaining parts: %'d\r", sum, FACTORIAL);
+    fflush(stdout);
+
     for (int i = 0; i < half; i++)
     {
       cleanupArgs[i] = init_cleanups(&n[i], &n[count - 1 - i]);
@@ -150,6 +153,7 @@ int main()
     }
     half = count / 2;
   }
+  printf("\n");
 
   FILE *fp = fopen("Factorial of " stringify(FACTORIAL) ".txt", "w+");
 
