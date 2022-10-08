@@ -8,8 +8,8 @@
 #define str(x) #x
 #define stringify(x) str(x)
 
-#define THREAD_NUM 4
-#define FACTORIAL 10000
+#define THREAD_NUM 270
+#define FACTORIAL 10000000
 
 unsigned long progs[THREAD_NUM] = {0};
 
