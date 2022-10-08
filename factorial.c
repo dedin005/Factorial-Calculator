@@ -8,8 +8,8 @@
 #define str(x) #x
 #define stringify(x) str(x)
 
-#define THREAD_NUM 270
-#define FACTORIAL 100000000
+#define THREAD_NUM 4
+#define FACTORIAL 10000
 
 unsigned long progs[THREAD_NUM] = {0};
 
@@ -24,14 +24,6 @@ typedef struct
   mpz_t *result;
   mpz_t *multiplier;
 } cleanup_t;
-
-args_t init_args(mpz_t *n, uint64_t start)
-{
-  args_t t;
-  t.n = n;
-  t.start = start;
-  return t;
-}
 
 cleanup_t init_cleanups(mpz_t *result, mpz_t *multiplier)
 {
@@ -55,9 +47,9 @@ void *factorial_part(void *a)
 
   mpz_t *p = args.n;
 
-  uint64_t start = args.start;
+  int64_t start = args.start;
 
-  for (uint64_t i = start; i <= FACTORIAL; i += THREAD_NUM)
+  for (int64_t i = FACTORIAL - start + 1; i > 0; i -= THREAD_NUM)
   {
     mpz_mul_ui(*p, *p, i);
     progs[start - 1]++;
@@ -92,7 +84,10 @@ int main()
   {
     mpz_init(n[i]);
     mpz_set_ui(n[i], 1);
-    a[i] = init_args(&n[i], i + 1);
+
+    a[i].n = &n[i];
+    a[i].start = i + 1;
+
     pthread_create(&p[i], NULL, factorial_part, (void *)&a[i]);
   }
 
