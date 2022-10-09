@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "gmp.h": "c",
-        "pthread.h": "c",
-        "stdint.h": "c",
-        "stdio.h": "c"
-    },
-    "C_Cpp.errorSquiggles": "Disabled"
-}
