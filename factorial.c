@@ -8,8 +8,8 @@
 #define str(x) #x
 #define stringify(x) str(x)
 
-#define THREAD_NUM 270
-#define FACTORIAL 10000000
+#define THREAD_NUM 7
+#define FACTORIAL 1000000
 
 unsigned long progs[THREAD_NUM] = {0};
 
@@ -24,14 +24,6 @@ typedef struct
   mpz_t *result;
   mpz_t *multiplier;
 } cleanup_t;
-
-cleanup_t init_cleanups(mpz_t *result, mpz_t *multiplier)
-{
-  cleanup_t t;
-  t.result = result;
-  t.multiplier = multiplier;
-  return t;
-}
 
 void *cleanup(void *a)
 {
@@ -63,6 +55,11 @@ int main()
   if (THREAD_NUM <= 0)
   {
     printf("You need at least 1 thread to run this program.\n");
+    return 1;
+  }
+  else if (FACTORIAL < 0)
+  {
+    printf("This function doesn't work for negative factorials.\n");
     return 1;
   }
 
@@ -128,7 +125,8 @@ int main()
 
     for (int i = 0; i < half; i++)
     {
-      cleanupArgs[i] = init_cleanups(&n[i], &n[count - 1 - i]);
+      cleanupArgs[i].result = &n[i];
+      cleanupArgs[i].multiplier = &n[count - 1 - i];
     }
 
     for (int i = 0; i < half; i++)
@@ -136,6 +134,7 @@ int main()
       pthread_create(&cleanupThreads[i], NULL, cleanup, (void *)&cleanupArgs[i]);
     }
 
+    // wait for all the threads to finish before continuing cleanup
     for (int i = 0; i < half; i++)
     {
       pthread_join(cleanupThreads[i], NULL);
