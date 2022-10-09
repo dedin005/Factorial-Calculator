@@ -39,12 +39,19 @@ void *factorial_part(void *a) {
 int main()
 {
   /*
-  */
-  mpz_t n0;
+   */
+  mpz_t n0, n1;
 
-  mpz_init(n0);
+  mpz_inits(n0, n1, NULL);
 
-  mpz_set_ui(n0, 1);
+  mpz_set_ui(n0, 4);
+  mpz_set_ui(n1, 20);
+
+  mpz_mul(n0, n0, n1);
+
+  FILE *f = fopen("test.txt", "w+");
+
+  mpz_out_str(f, 10, n0);
 
   // for (int j = 0; j < 10000; j++)
   // {
@@ -55,24 +62,23 @@ int main()
   //   mpz_set_ui(n0, 1);
   // }
 
-  int fd = open("output.txt", O_RDWR);
+  // int fd = open("output.txt", O_RDWR);
 
-  struct stat sb;
-  fstat(fd, &sb);
+  // struct stat sb;
+  // fstat(fd, &sb);
 
-  char *nums = (char *)mmap(NULL, (__uint64_t)sb.st_size, PROT_WRITE, MAP_SHARED, fd, 0);
+  // char *nums = (char *)mmap(NULL, (__uint64_t)sb.st_size, PROT_WRITE, MAP_SHARED, fd, 0);
 
-  printf("size: %lu\n", (__uint64_t)sb.st_size);
-  printf("first 100 values:\n");
-  for (int i = 0; i < 100; i++) {
-    printf("%d\n", ((int*)nums)[i]);
-  }
+  // printf("size: %lu\n", (__uint64_t)sb.st_size);
+  // printf("first 100 values:\n");
+  // for (int i = 0; i < 100; i++) {
+  //   printf("%d\n", ((int*)nums)[i]);
+  // }
 
-  mpz_export((void *)nums, NULL, 1, 1, 0, 0, n0);
+  // mpz_export((void *)nums, NULL, 1, 1, 0, 0, n0);
 
-  munmap(nums, (__uint64_t)sb.st_size);
+  // munmap(nums, (__uint64_t)sb.st_size);
 
-  mpz_clear(n0);
   //*/
   /*
   FILE *f = fopen("output.txt", "w+");
@@ -85,6 +91,8 @@ int main()
   }
   fclose(f);
   //*/
+
+  mpz_clear(n0);
 
   return 0;
 }
